@@ -71,13 +71,12 @@
      // Use the original animated PNG. It is preloaded so the browser can
      // decode the complete animation before the success screen appears.
      // Avoid cache-busting because a fresh request can cause APNG stutter.
-     celebrationBear.src='assets/bear-celebration.png';
      celebrationBear.hidden=false;
    }
    $('accepted-title').focus({preventScroll:true});celebrate();
    if(openCalendar){
      const apple=/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent);
-     if(apple)$('apple-calendar').click();else $('google-calendar').click();
+     setTimeout(()=>{if(apple)$('apple-calendar').click();else $('google-calendar').click();},650);
    }
  }
  function reject(){
