@@ -41,7 +41,7 @@
    // the flower/fade sequence, since those events vary across mobile browsers.
    queueFlower(thisRun);
    bear.onerror=()=>{bear.onerror=null;};
-   bear.src='assets/bear-intro.webp';
+   bear.src='assets/bear-intro-smooth.webp';
  }
  function start(){
    stopTimers();run++;const thisRun=run;resetBear();$('confetti').replaceChildren();
