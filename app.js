@@ -14,7 +14,7 @@
    $('ticket-month').textContent=new Intl.DateTimeFormat('es-MX',{month:'short'}).format(d).replace('.','');
    $('ticket-day').textContent=d.getDate();
    $('event-date').textContent=new Intl.DateTimeFormat('es-MX',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(d);
-   $('event-time').textContent=d.getHours()+':00–'+'medianoche · hora de tu dispositivo';
+   $('event-time').textContent=d.getHours()+':00–11:59 p. m. · hora de tu dispositivo';
    $('google-calendar').href=event.google;
    if(icsURL)URL.revokeObjectURL(icsURL);
    icsURL=URL.createObjectURL(new Blob([event.ics],{type:'text/calendar;charset=utf-8'}));
