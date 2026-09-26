@@ -3,8 +3,7 @@
  const $=id=>document.getElementById(id);
  const scene=$('scene'),invite=$('invitation'),accepted=$('accepted'),challenge=$('challenge'),bear=$('bear');
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
- if(reduced.matches)$('celebration-bear').src='assets/bear-celebration-still.png';
- let timers=[],view='intro',selectedHour=16,event=SaliditaCalendar.eventFor(),icsURL='',run=0,birthdayUnlocked=false;
+  let timers=[],view='intro',selectedHour=16,event=SaliditaCalendar.eventFor(),icsURL='',run=0,birthdayUnlocked=false;
  const timer=(fn,ms)=>{const id=setTimeout(fn,ms);timers.push(id);return id;};
  const stopTimers=()=>{timers.forEach(clearTimeout);timers=[];};
  function setView(next){view=next;document.body.dataset.view=next;}
@@ -23,6 +22,14 @@
  const DANCE_MS=3600;
 
  function resetBear(){bear.onload=null;bear.onerror=null;bear.src='assets/bear-poster.png';}
+ function restartCelebrationBear(){
+   const img=$('celebration-bear');
+   if(!img)return;
+   img.src='assets/bear-celebration-still.png';
+   requestAnimationFrame(()=>{
+     img.src='assets/bear-celebration.webp?play='+Date.now();
+   });
+ }
  function reveal(focus=false){
    stopTimers();run++;resetBear();scene.hidden=true;scene.classList.remove('playing','fading','offering');
    invite.hidden=false;accepted.hidden=true;challenge.hidden=true;$('replay').hidden=false;
@@ -65,7 +72,7 @@
    if(view!=='invitation')return;
    stopTimers();if(event.start<=new Date()){event=SaliditaCalendar.eventFor(new Date(),selectedHour);syncCalendar();}
    scene.hidden=true;invite.hidden=true;challenge.hidden=true;accepted.hidden=false;$('replay').hidden=false;
-   setView('accepted');$('accepted-title').focus({preventScroll:true});celebrate();
+   setView('accepted');restartCelebrationBear();$('accepted-title').focus({preventScroll:true});celebrate();
    if(openCalendar){
      const apple=/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent);
      if(apple)$('apple-calendar').click();else $('google-calendar').click();
