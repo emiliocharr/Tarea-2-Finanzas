@@ -25,10 +25,10 @@
  function restartCelebrationBear(){
    const img=$('celebration-bear');
    if(!img)return;
-   img.src='assets/bear-celebration-still.png';
-   requestAnimationFrame(()=>{
-     img.src='assets/bear-celebration.webp?play='+Date.now();
-   });
+   img.src='assets/bear-celebration.webp?play='+Date.now();
+   img.classList.remove('dancing');
+   void img.offsetWidth;
+   img.classList.add('dancing');
  }
  function reveal(focus=false){
    stopTimers();run++;resetBear();scene.hidden=true;scene.classList.remove('playing','fading','offering');
