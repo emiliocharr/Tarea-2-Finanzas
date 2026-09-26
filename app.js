@@ -35,18 +35,17 @@
    scene.classList.add('offering');timer(()=>scene.classList.add('fading'),2700);timer(()=>reveal(),3850);
  }
  function playDance(thisRun){
-   $('dance-retry').hidden=true;
    loadDance().then(blob=>{
      if(view!=='intro'||run!==thisRun)return;
      if(danceURL)URL.revokeObjectURL(danceURL);danceURL=URL.createObjectURL(blob);
      bear.onload=()=>{bear.onload=null;if(run===thisRun&&view==='intro'){scene.classList.add('playing');timer(()=>offerFlower(thisRun),DANCE_MS);}};
-     bear.onerror=()=>{if(run===thisRun&&view==='intro')$('dance-retry').hidden=false;};bear.src=danceURL;
-   }).catch(()=>{if(run===thisRun&&view==='intro')$('dance-retry').hidden=false;});
+     bear.onerror=()=>{};bear.src=danceURL;
+   }).catch(()=>{});
  }
  function start(){
    stopTimers();run++;const thisRun=run;resetBear();$('confetti').replaceChildren();
    invite.hidden=true;accepted.hidden=true;challenge.hidden=true;scene.hidden=false;scene.classList.remove('playing','fading','offering');
-   $('replay').hidden=true;$('dance-retry').hidden=true;setView('intro');
+   $('replay').hidden=true;setView('intro');
    if(reduced.matches){reveal();return;}
    void scene.offsetWidth;playDance(thisRun);
  }
@@ -87,7 +86,6 @@
      $('birthday').setAttribute('aria-invalid','true');$('birthday-feedback').textContent='nop, intenta otra vez';
    }
  });
- $('dance-retry').addEventListener('click',()=>playDance(run));
  $('time').addEventListener('change',()=>{selectedHour=Number($('time').value);event=SaliditaCalendar.eventFor(new Date(),selectedHour);syncCalendar();});
  $('replay').addEventListener('click',start);
  $('yes').addEventListener('click',()=>accept());
