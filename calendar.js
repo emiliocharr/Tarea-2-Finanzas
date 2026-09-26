@@ -11,7 +11,7 @@
  function localStamp(d){return d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+'T'+pad(d.getHours())+pad(d.getMinutes())+pad(d.getSeconds());}
  function utcStamp(d){return d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}Z$/,'Z');}
  function eventFor(now=new Date(),hour=16){
-   const start=nextSunday(now,hour),end=new Date(start);end.setDate(end.getDate()+1);end.setHours(0,0,0,0);
+   const start=nextSunday(now,hour),end=new Date(start);end.setHours(23,59,0,0);
    const uid='salidita-'+localStamp(start)+'@salidita.local';
    const google=new URL('https://calendar.google.com/calendar/render');
    google.search=new URLSearchParams({action:'TEMPLATE',text:'Salidita',dates:utcStamp(start)+'/'+utcStamp(end),details:'porque te extraño'}).toString();
