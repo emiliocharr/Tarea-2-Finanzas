@@ -38,7 +38,7 @@
    loadDance().then(blob=>{
      if(view!=='intro'||run!==thisRun)return;
      if(danceURL)URL.revokeObjectURL(danceURL);danceURL=URL.createObjectURL(blob);
-     bear.onload=()=>{bear.onload=null;if(run===thisRun&&view==='intro'){scene.classList.add('playing');timer(()=>offerFlower(thisRun),DANCE_MS);}};
+     bear.onload=()=>{bear.onload=null;if(run===thisRun&&view==='intro')timer(()=>offerFlower(thisRun),DANCE_MS);};
      bear.onerror=()=>{};bear.src=danceURL;
    }).catch(()=>{});
  }
@@ -47,7 +47,7 @@
    invite.hidden=true;accepted.hidden=true;challenge.hidden=true;scene.hidden=false;scene.classList.remove('playing','fading','offering');
    $('replay').hidden=true;setView('intro');
    if(reduced.matches){reveal();return;}
-   void scene.offsetWidth;playDance(thisRun);
+   void scene.offsetWidth;scene.classList.add('playing');playDance(thisRun);
  }
  function celebrate(){
    if(reduced.matches)return;
@@ -93,10 +93,8 @@
  $('back').addEventListener('click',()=>reveal(true));
  syncCalendar();if(!reduced.matches)loadDance().catch(()=>{});
  // Images may load slowly or fail; the invitation always remains reachable.
- const images=[...scene.querySelectorAll('img')];
- const loads=images.map(img=>img.decode?img.decode().catch(()=>{}):Promise.resolve());
  let started=false;const begin=()=>{if(!started){started=true;if(view==='intro')start();}};
- Promise.allSettled(loads).then(begin);timer(begin,3500);
+ begin();
  window.addEventListener('pagehide',()=>{[icsURL,danceURL].filter(Boolean).forEach(url=>URL.revokeObjectURL(url));});
  window.addEventListener('pageshow',e=>{if(e.persisted){syncCalendar();if(view==='intro')start();}});
  if(document.modelContext?.registerTool){
