@@ -9,6 +9,7 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%23fce5ee'/%3E%3Cpath d='M24 40V23M24 34Q12 34 13 25' stroke='%2353734e' stroke-width='3' fill='none'/%3E%3Cpath d='M13 12L20 17L24 9L28 17L35 12V23Q24 37 13 23Z' fill='%23b9436b'/%3E%3C/svg%3E">
 <link rel="preload" as="image" href="assets/sunset.webp">
 <link rel="preload" as="image" href="assets/bear-intro-smooth.webp">
+<link rel="preload" as="image" href="assets/bear-celebration.png" fetchpriority="high">
 <link rel="stylesheet" href="styles.css">
 <script src="calendar.js" defer></script>
 <script src="app.js" defer></script>
@@ -51,7 +52,7 @@
 </section>
 <section id="accepted" class="invitation" hidden aria-labelledby="accepted-title">
   <div class="card success-card">
-    <img id="celebration-bear" class="celebration-bear" src="assets/bear-celebration.png" alt="El nuevo osito bailando con lentes" width="340" height="450">
+    <img id="celebration-bear" class="celebration-bear" src="assets/bear-celebration.png" alt="El nuevo osito bailando con lentes" width="340" height="450" decoding="async" fetchpriority="high">
     <h2 id="accepted-title" tabindex="-1">¡Sii, <em>yeii!</em></h2>
     <p class="success-copy">nos vemos el domingo te quiero</p>
     <div class="event-ticket">
