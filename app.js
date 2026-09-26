@@ -53,13 +53,17 @@
  function celebrate(){
    if(reduced.matches)return;
    $('confetti').replaceChildren();
-   for(let i=0;i<24;i++){
-     const bit=document.createElement('i');bit.textContent='✦';
-     bit.style.left=(Math.random()*100)+'%';bit.style.animationDelay=(Math.random()*.65)+'s';
-     bit.style.setProperty('--drift',(Math.random()*140-70)+'px');bit.style.setProperty('--turn',(Math.random()*200-100)+'deg');
-     $('confetti').append(bit);
-   }
-   timer(()=>$('confetti').replaceChildren(),4500);
+   // Let the 5-frame APNG finish its first loop before starting the
+   // extra visual effects, so they cannot compete for the same frame time.
+   timer(()=>{
+     for(let i=0;i<14;i++){
+       const bit=document.createElement('i');bit.textContent='✦';
+       bit.style.left=(Math.random()*100)+'%';bit.style.animationDelay=(Math.random()*.45)+'s';
+       bit.style.setProperty('--drift',(Math.random()*140-70)+'px');bit.style.setProperty('--turn',(Math.random()*200-100)+'deg');
+       $('confetti').append(bit);
+     }
+     timer(()=>$('confetti').replaceChildren(),4000);
+   },320);
  }
  function accept(openCalendar=true){
    if(view!=='invitation')return;
