@@ -8,6 +8,7 @@
 <title>salidita</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%23fce5ee'/%3E%3Cpath d='M24 40V23M24 34Q12 34 13 25' stroke='%2353734e' stroke-width='3' fill='none'/%3E%3Cpath d='M13 12L20 17L24 9L28 17L35 12V23Q24 37 13 23Z' fill='%23b9436b'/%3E%3C/svg%3E">
 <link rel="preload" as="image" href="assets/sunset.webp">
+<link rel="preload" as="image" href="assets/bear-intro.webp">
 <link rel="stylesheet" href="styles.css">
 <script src="calendar.js" defer></script>
 <script src="app.js" defer></script>
@@ -18,16 +19,16 @@
 <header class="masthead"><span class="wordmark">salidita</span></header>
 <main id="main">
 <section id="scene" class="scene" aria-label="Un osito baila, recoge un tulipán y te lo ofrece">
-  <div class="bear-track"><div class="bear-pose"><img id="bear" src="assets/bear-poster.png" alt="" width="360" height="410"><img class="offered-flower" src="assets/tulip.png" alt="" width="200" height="500"></div></div>
-  <img class="garden" src="assets/tulips.png" alt="" width="1536" height="1024">
-  <img class="picked-flower" src="assets/tulip.png" alt="" width="200" height="500">
+  <div class="bear-track"><div class="bear-pose"><img id="bear" src="assets/bear-poster.png" alt="" width="360" height="410"><img class="offered-flower" src="assets/tulip.webp" alt="" width="200" height="500"></div></div>
+  <img class="garden" src="assets/tulips.webp" alt="" width="1536" height="1024">
+  <img class="picked-flower" src="assets/tulip.webp" alt="" width="200" height="500">
 </section>
 <section id="invitation" class="invitation" hidden aria-labelledby="question">
   <div class="card question-card">
     <p class="greeting">holii meliwis</p>
     <div class="question-row">
       <h1 id="question" tabindex="-1">¿quieres salir<br>el <em>domingo</em> a las<br>4, 5, 6 o 7?</h1>
-      <img class="question-cat" src="assets/cat-question.png" alt="Gatito confundido con un signo de interrogación" width="300" height="300">
+      <img class="question-cat" src="assets/cat-question.webp" alt="Gatito confundido con un signo de interrogación" width="300" height="300">
     </div>
     <p class="date-line" id="invite-date"></p>
     <div class="schedule-choice"><label for="time">hora</label><select id="time" name="time"><option value="16">4:00 p. m.</option><option value="17">5:00 p. m.</option><option value="18">6:00 p. m.</option><option value="19">7:00 p. m.</option></select></div>
@@ -50,7 +51,7 @@
 </section>
 <section id="accepted" class="invitation" hidden aria-labelledby="accepted-title">
   <div class="card success-card">
-    <img id="celebration-bear" class="celebration-bear" src="assets/bear-celebration.png" alt="El nuevo osito bailando con lentes" width="340" height="450">
+    <img id="celebration-bear" class="celebration-bear" src="assets/bear-celebration.webp" alt="El nuevo osito bailando con lentes" width="340" height="450">
     <h2 id="accepted-title" tabindex="-1">¡Sii, <em>yeii!</em></h2>
     <p class="success-copy">nos vemos el domingo te quiero</p>
     <div class="event-ticket">

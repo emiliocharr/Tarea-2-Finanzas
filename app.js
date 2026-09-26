@@ -4,7 +4,7 @@
  const scene=$('scene'),invite=$('invitation'),accepted=$('accepted'),challenge=$('challenge'),bear=$('bear');
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
  if(reduced.matches)$('celebration-bear').src='assets/bear-celebration-still.png';
- let timers=[],view='intro',selectedHour=16,event=SaliditaCalendar.eventFor(),icsURL='',run=0,danceURL='',dancePromise=null,birthdayUnlocked=false;
+ let timers=[],view='intro',selectedHour=16,event=SaliditaCalendar.eventFor(),icsURL='',run=0,birthdayUnlocked=false;
  const timer=(fn,ms)=>{const id=setTimeout(fn,ms);timers.push(id);return id;};
  const stopTimers=()=>{timers.forEach(clearTimeout);timers=[];};
  function setView(next){view=next;document.body.dataset.view=next;}
@@ -20,11 +20,9 @@
    icsURL=URL.createObjectURL(new Blob([event.ics],{type:'text/calendar;charset=utf-8'}));
    $('apple-calendar').href=icsURL;
  }
- const DANCE_MS=3200;
- function assetBlob(path){return fetch(path).then(r=>{if(!r.ok)throw new Error('animation');return r.blob();});}
- function loadDance(){if(!dancePromise)dancePromise=assetBlob('assets/bear-dance-full.webp').catch(e=>{dancePromise=null;throw e;});return dancePromise;}
+ const DANCE_MS=3600;
 
- function resetBear(){bear.onload=null;bear.onerror=null;bear.src='assets/bear-poster.png';if(danceURL){URL.revokeObjectURL(danceURL);danceURL='';}}
+ function resetBear(){bear.onload=null;bear.onerror=null;bear.src='assets/bear-poster.png';}
  function reveal(focus=false){
    stopTimers();run++;resetBear();scene.hidden=true;scene.classList.remove('playing','fading','offering');
    invite.hidden=false;accepted.hidden=true;challenge.hidden=true;$('replay').hidden=false;
@@ -32,15 +30,18 @@
  }
  function offerFlower(thisRun){
    if(view!=='intro'||run!==thisRun)return;
+   stopTimers();
    scene.classList.add('offering');timer(()=>scene.classList.add('fading'),2700);timer(()=>reveal(),3850);
  }
+ function queueFlower(thisRun,delay=DANCE_MS){
+   if(view==='intro'&&run===thisRun)timer(()=>offerFlower(thisRun),delay);
+ }
  function playDance(thisRun){
-   loadDance().then(blob=>{
-     if(view!=='intro'||run!==thisRun)return;
-     if(danceURL)URL.revokeObjectURL(danceURL);danceURL=URL.createObjectURL(blob);
-     bear.onload=()=>{bear.onload=null;if(run===thisRun&&view==='intro')timer(()=>offerFlower(thisRun),DANCE_MS);};
-     bear.onerror=()=>{};bear.src=danceURL;
-   }).catch(()=>{});
+   // Start the animation directly; never depend on image load/decode events for
+   // the flower/fade sequence, since those events vary across mobile browsers.
+   queueFlower(thisRun);
+   bear.onerror=()=>{bear.onerror=null;};
+   bear.src='assets/bear-intro.webp';
  }
  function start(){
    stopTimers();run++;const thisRun=run;resetBear();$('confetti').replaceChildren();
@@ -91,11 +92,11 @@
  $('yes').addEventListener('click',()=>accept());
  $('no').addEventListener('click',reject);
  $('back').addEventListener('click',()=>reveal(true));
- syncCalendar();if(!reduced.matches)loadDance().catch(()=>{});
+ syncCalendar();
  // Images may load slowly or fail; the invitation always remains reachable.
  let started=false;const begin=()=>{if(!started){started=true;if(view==='intro')start();}};
  begin();
- window.addEventListener('pagehide',()=>{[icsURL,danceURL].filter(Boolean).forEach(url=>URL.revokeObjectURL(url));});
+ window.addEventListener('pagehide',()=>{if(icsURL)URL.revokeObjectURL(icsURL);});
  window.addEventListener('pageshow',e=>{if(e.persisted){syncCalendar();if(view==='intro')start();}});
  if(document.modelContext?.registerTool){
    const lifetime=new AbortController();
