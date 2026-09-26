@@ -67,7 +67,13 @@
    scene.hidden=true;invite.hidden=true;challenge.hidden=true;accepted.hidden=false;$('replay').hidden=false;
    setView('accepted');
    const celebrationBear=$('celebration-bear');
-   if(celebrationBear){celebrationBear.src='assets/bear-celebration.png?play='+Date.now();}
+   if(celebrationBear){
+     // Use the original animated PNG. It is preloaded so the browser can
+     // decode the complete animation before the success screen appears.
+     // Avoid cache-busting because a fresh request can cause APNG stutter.
+     celebrationBear.src='assets/bear-celebration.png';
+     celebrationBear.hidden=false;
+   }
    $('accepted-title').focus({preventScroll:true});celebrate();
    if(openCalendar){
      const apple=/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent);
